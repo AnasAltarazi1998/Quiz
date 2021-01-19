@@ -30,21 +30,21 @@
                         label="Client Name"
                         type="text"
                         counter="20"
-                        v-model="client.name"
+                        v-model="tabs[0].client.name"
                         :rules="ClientnameRules"
                         required
                       ></v-text-field>
                       <v-text-field
                         label="Last Name"
                         type="text"
-                        v-model="client.last_name"
+                        v-model="tabs[0].client.last_name"
                         :rules="last_nameRules"
                         required
                       ></v-text-field>
                       <v-text-field
                         label="mobile"
                         type="number"
-                        v-model="client.mobile"
+                        v-model="tabs[0].client.mobile"
                         :rules="mobileRules"
                         required
                       ></v-text-field>
@@ -55,7 +55,7 @@
                     <v-btn 
                       :disabled="!valid"
                       class="mr-4 "
-                      @click="validate ,createclientInfo"
+                      @click="createclientInfo"
                       color="primary"
                      >
                      Create
@@ -73,14 +73,16 @@
                     <v-container class="cont " d-flex flex-column flex-direction: row >
                       <h3>Choose client to view :</h3>
                       <v-select class="pr-16 pl-1 "
-                          :items="client.name"
+                          :items="clients"
+                          item-text="name"
+                          item-value="id"
                           solo
                           label=""
                           ref="reset"
                           
                           
                         ></v-select>
-                         <p>Client id  {{client.id.toString()}}</p>
+                         <p>Client id  {{tabs[1].client.id}}</p>
                     </v-container >
                       <v-text-field
                         outlined
@@ -88,14 +90,14 @@
                         name="Clientname"
                         label="Client Name"
                         type="text"
-                        v-model="client.name"
+                        v-model="tabs[1].client.name"
                         
                       ></v-text-field>
                       <v-text-field
                         outlined
                         label="Last Name"
                         type="text"
-                        v-model="client.last_name"
+                        v-model="tabs[1].client.last_name"
                         readonly
                      ></v-text-field>
                       <v-text-field
@@ -103,7 +105,7 @@
                         readonly
                         label="mobile"
                         type="text"
-                        v-model="client.mobile"
+                        v-model="tabs[1].client.mobile"
                         
                       ></v-text-field>
                     </v-form>
@@ -123,7 +125,8 @@
                     <v-container class="cont " d-flex flex-column flex-direction: row >
                       <h3>Choose client to edit :</h3>
                       <v-select class="pr-16 pl-1 "
-                          :items="client.name"
+                          :items="clients"
+                          item-text="name" 
                           solo
                           label=""
                           ref="reset"
@@ -136,19 +139,19 @@
                         label="Client Name"
                         type="text"
                         counter="20"
-                        v-model="client.name"
+                        v-model="tabs[2].client.name"
                         
                       ></v-text-field>
                       <v-text-field
                         label="Last Name"
                         type="text"
-                        v-model="client.last_name"
+                        v-model="tabs[2].client.last_name"
                      ></v-text-field>
                       <v-text-field
                         label="mobile"
                         type="text"
                         counter="20"
-                        v-model="client.mobile"
+                        v-model="tabs[2].client.mobile"
                         
                       ></v-text-field>
                     </v-form>
@@ -179,18 +182,25 @@
 
 <script>
 export default {
-  name: 'Home',
   components: {},
 
   data: () => ({
     tab:'',
     items:[],
     disabled:true,
-    client: {
-      id:[],
+    clients: [],
+    tabs :[
+      {
+        client:{},
+      },
+      {
+        client:{},
+      },
+      {
+        client:{},
+      },
+    ],
       
-      name: ''
-    },
     valid: false,
     Clientname: [],
     ClientnameRules: [
@@ -221,42 +231,40 @@ export default {
     reset() {
       this.$refs.reset.reset();
     },
-    // createclientInfo () {
-    //   const self = this
-
-    //   const info = {
-    //     id: self.client.id,
-    //     name: self.client.name,
-    //     last_name: self.client.last_name,
-    //     mobile: self.client.mobile,
-    //     
-    //   }
-
-    //   self.axios.post('http://127.0.0.1:8083/clients/create', info).then((res) => {
+    createclientInfo () {
+      const self = this
+      this.validate()
+      const info = {
+        id: self.client.id,
+        name: self.client.name,
+        last_name: self.client.last_name,
+        mobile: self.client.mobile,
         
-    //   })
-    // },
-    // editclientInfo () {
-    //   const self = this
+      }
 
-    //   const info = {
-    //     id: self.client.id,
-    //     name: self.client.name,
-    //     last_name: self.client.last_name,
-    //     mobile: self.client.mobile,
-    //   }
+      self.axios.post('http://127.0.0.1:8083/clients/create', info).then()
+    },
+    editclientInfo () {
+      const self = this
 
-    //   self.axios.post('', info).then((res) => {
+      const info = {
+        id: self.client.id,
+        name: self.client.name,
+        last_name: self.client.last_name,
+        mobile: self.client.mobile,
+      }
+
+      self.axios.post('http://127.0.0.1:8083/clients/edit', info).then(() => {
         
-    //   })
-    // },
-    // getclientInfo () {
-    //   const self = this
+      })
+    },
+    getclientInfo () {
+      const self = this
 
-    //   self.axios.get('').then((res) => {
-    //     self.client = res.data
-    //   })
-    // }
+      self.axios.get('http://127.0.0.1:8083/clients/fetch').then((res) => {
+        self.clients = res.data
+      })
+    }
   },
 }
 </script>

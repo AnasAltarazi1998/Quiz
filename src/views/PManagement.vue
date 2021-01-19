@@ -10,14 +10,12 @@
               color="deep-purple accent-4"
               background-color="primary"
               left
-              v-model="tab2"
+              v-model="tab"
             >
               <v-tab class="white--text">Create New Product</v-tab>
               <v-tab class="white--text">View Products</v-tab>
               <v-tab class="white--text">Edit existing product</v-tab>
-              <!-- <v-tabs-items v-model="tab2"> -->
               <v-tab-item>
-                <!-- v-for="(item, i) in items" :key="i" :value="tab2[0]"  this must be with* <v-tab-item * > one line above >-->
                 <v-card class="mx-auto elevation-12">
                   <v-card-text>
                     <v-form
@@ -76,7 +74,7 @@
                     <v-btn
                       :disabled="!valid"
                       class="mr-4"
-                      @click="validate, createProductInfo"
+                      @click="createProductInfo"
                       color="primary"
                     >
                       Create
@@ -85,7 +83,6 @@
                 </v-card>
               </v-tab-item>
               <v-tab-item>
-                <!-- v-for="(item, i) in items" :key="i" :value="tab2[1]" this must be with* <v-tab-item  * > one line above-->
                 <v-card class="mx-auto elevation-12 midcard Blured">
                   <v-card-text class="pa-12">
                     <v-form ref="reset" class="pb-16 px-7">
@@ -157,7 +154,6 @@
                 </v-card>
               </v-tab-item>
               <v-tab-item>
-                <!-- v-for="(item, i) in items" :key="i" :value="tab2[2]"  this must be with* <v-tab-item  * > one line above -->
                 <v-card class="mx-auto elevation-12 midcard Blured">
                   <v-card-text class="pa-12">
                     <v-form ref="reset" class="pb-16 px-7">
@@ -172,6 +168,7 @@
                         <v-select
                           class="pr-16 pl-1"
                           :items="products"
+                           item-text="name" 
                           solo
                           label=""
                           ref="reset"
@@ -218,7 +215,6 @@
                     >
                       Edit
                     </v-btn>
-
                     <v-btn color="error" class="mr-4" @click="reset">
                       Cancel Edit
                     </v-btn>
@@ -228,7 +224,6 @@
                   </v-card-actions>
                 </v-card>
               </v-tab-item>
-              <!-- </v-tabs-items> -->
             </v-tabs>
           </v-card>
         </v-col>
@@ -242,19 +237,19 @@ export default {
   components: {},
 
   data: () => ({
-    tab2: "",
+    tab: '',
     items: [],
     disabled: true,
     products: [],
     tabs: [
       {
-        product: {}
+        product: {},
       },
       {
-        product: {}
+        product: {},
       },
       {
-        product: {}
+        product: {},
       },
     ],
     valid: false,
@@ -301,12 +296,9 @@ export default {
     reset() {
       this.$refs.reset.reset();
     },
-    reset2() {
-      this.$refs.reset2.reset();
-    },
-    createProductInfo () {
-      const self = this
-
+    createProductInfo() {
+      const self = this;
+      this.validate();
       const info = {
         id: self.tabs[0].product.id,
         name: self.tabs[0].product.name,
@@ -315,15 +307,15 @@ export default {
         quantities: self.tabs[0].product.quantities,
         price: self.tabs[0].product.price,
         creation_date: self.tabs[0].product.creation_date,
-      }
+      };
 
-      self.axios.post('http://127.0.0.1:8083/products/create', info).then(() => {
-
-      })
+      self.axios
+        .post("http://127.0.0.1:8083/products/create", info)
+        .then();
     },
-    editProductInfo () {
-      const self = this
-
+    editProductInfo() {
+      const self = this;
+    
       const info = {
         id: self.product.id,
         name: self.product.name,
@@ -332,20 +324,19 @@ export default {
         quantities: self.product.quantities,
         price: self.product.price,
         creation_date: self.product.creation_date,
-      }
+      };
 
-      self.axios.post('http://127.0.0.1:8083/products/update', info).then(() => {
-
-      })
+      self.axios
+        .post("http://127.0.0.1:8083/products/update", info)
+        .then(() => {});
     },
-    getProductsInfo () {
-      const self = this
+    getProductsInfo() {
+      const self = this;
 
-      // products/fetch
-      self.axios.get('products').then((res) => {
-        self.products = res.data
-      })
-    }
+      self.axios.get('http://127.0.0.1:8083/products/fetch').then((res) => {
+        self.products = res.data;
+      });
+    },
   },
 };
 </script>
