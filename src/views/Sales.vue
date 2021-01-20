@@ -32,7 +32,7 @@
                           solo
                           label="Product name"
                           ref="reset"
-                          v-model="tabs[0].product.name"
+                          v-model="tabs[0].sale.product_name"
                         ></v-select>
                         <v-row>
                         <v-col cols="2">
@@ -63,7 +63,7 @@
                           solo
                           label="Client name"
                           ref="reset"
-                          v-model="tabs[0].client.name"
+                          v-model="tabs[0].sale.client_name"
                         ></v-select>
                       <v-col cols="2">
                       <v-text-field
@@ -73,6 +73,14 @@
                         label="Total"
                         type="number"
                         v-model="tabs[0].sale.total"
+                        readonly
+                      ></v-text-field>
+                      <v-text-field
+                        outlined 
+                        name="Seller"
+                        label="Seller"
+                        type="text"
+                        v-model="tabs[0].sale.saller_name"
                         readonly
                       ></v-text-field>
                       </v-col>
@@ -311,9 +319,10 @@ export default {
       const self = this;
       this.validate();
       const info = {
-      product_name: self.tab[0].product.name,
-      client_name: self.tab[0].client.name,
+      product_name: self.tab[0].sale.product_name,
+      client_name: self.tab[0].sale.client_name,
       quantities: self.tab[0].sale.quantities,
+      saller_name: self.tab[0].sale.saller_name,
       total: self.tab[0].sale.total,
       };
       self.axios.post("http://127.0.0.1:8083/sales/sale", info).then();
