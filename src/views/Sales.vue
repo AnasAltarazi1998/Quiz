@@ -65,6 +65,7 @@
                           ref="reset"
                           v-model="tabs[0].sale.client_name"
                         ></v-select>
+                        <v-row>
                       <v-col cols="2">
                       <v-text-field
                        outlined 
@@ -75,6 +76,8 @@
                         v-model="tabs[0].sale.total"
                         readonly
                       ></v-text-field>
+                      </v-col>
+                      <v-col cols="3">
                       <v-text-field
                         outlined 
                         name="Seller"
@@ -84,6 +87,7 @@
                         readonly
                       ></v-text-field>
                       </v-col>
+                      </v-row>
                     </v-form>
                   </v-card-text>
                   <v-card-actions class="flex-column">
@@ -125,7 +129,7 @@
                           solo
                           label="Product name"
                           ref="reset"
-                          v-model="tabs[1].product.name"
+                          v-model="tabs[1].sale.product_name"
                         ></v-text-field>
                         <v-row>
                         <v-col cols="3">
@@ -154,7 +158,7 @@
                           solo
                           label="Client name"
                           ref="reset"
-                          v-model="tabs[1].client.name"
+                          v-model="tabs[1].sale.client_name"
                         ></v-text-field>
                       <v-col cols="2">
                       <v-text-field
@@ -201,7 +205,7 @@
                           solo
                           label="Product name"
                           type="text"
-                          v-model="tabs[2].product.name"
+                          v-model="tabs[2].sale.product_name"
                         ></v-text-field>
                         <v-row>
                         <v-col cols="3">
@@ -231,7 +235,7 @@
                           solo
                           label="Client name"
                           ref="reset"
-                          v-model="tabs[2].client.name"
+                          v-model="tabs[2].sale.client_name"
                         ></v-text-field>
                       <v-col cols="2">
                       <v-text-field
