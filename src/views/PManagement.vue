@@ -240,7 +240,7 @@ export default {
     tab: '',
     items: [],
     disabled: true,
-    products: [],
+    Products: [],
     tabs: [
       {
         product: {},
@@ -306,7 +306,6 @@ export default {
         category: self.tabs[0].product.category,
         quantities: self.tabs[0].product.quantities,
         price: self.tabs[0].product.price,
-        creation_date: self.tabs[0].product.creation_date,
       };
 
       self.axios
@@ -317,13 +316,12 @@ export default {
       const self = this;
     
       const info = {
-        id: self.product.id,
-        name: self.product.name,
-        description: self.product.description,
-        category: self.product.category,
-        quantities: self.product.quantities,
-        price: self.product.price,
-        creation_date: self.product.creation_date,
+        id: self.tabs[2].product.id,
+        name: self.tabs[2].product.name,
+        description: self.tabs[2].product.description,
+        category: self.tabs[2].product.category,
+        quantities: self.tabs[2].product.quantities,
+        price: self.tabs[2].product.price,
       };
 
       self.axios
@@ -334,7 +332,7 @@ export default {
       const self = this;
 
       self.axios.get('http://127.0.0.1:8083/products/fetch').then((res) => {
-        self.products = res.data;
+        self.Products = res.data;
       });
     },
   },
